@@ -1,6 +1,6 @@
 import CustomerSearch from "@/app/(rs)/customers/CustomerSearch";
 import CustomerTable from "@/app/(rs)/customers/CustomerTable";
-import { getCustomerSearchResults } from "@/lib/queries";
+import { getAllCustomers, getCustomerSearchResults } from "@/lib/queries";
 
 export const metadata = {
   title: "Customer Search",
@@ -13,17 +13,19 @@ export default async function Customers({
 }) {
   const { searchText } = await searchParams;
 
-  if (!searchText) return <CustomerSearch />;
-
-  const results = await getCustomerSearchResults(searchText);
+  // Fetch data based on searchText
+  const data = searchText
+    ? await getCustomerSearchResults(searchText)
+    : await getAllCustomers();
 
   return (
     <>
       <CustomerSearch />
-      {results.length ? (
-        <CustomerTable data={results} />
+
+      {searchText && data.length === 0 ? (
+        <p className="text-center text-gray-500 mt-4">Aucun résultat trouvé.</p>
       ) : (
-        <p className="mt-4">No results found</p>
+        <CustomerTable data={data} />
       )}
     </>
   );

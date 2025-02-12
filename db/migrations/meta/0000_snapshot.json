@@ -1,5 +1,5 @@
 {
-  "id": "b9eb0f64-a87a-4ff3-9a3f-c14bbc788605",
+  "id": "bacd1c8a-4334-448c-8647-53fd32e26f53",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -44,29 +44,12 @@
           "primaryKey": false,
           "notNull": true
         },
-        "address2": {
-          "name": "address2",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "city": {
-          "name": "city",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "state": {
-          "name": "state",
+        "region": {
+          "name": "region",
           "type": "varchar(2)",
           "primaryKey": false,
-          "notNull": true
-        },
-        "zip": {
-          "name": "zip",
-          "type": "varchar(10)",
-          "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'DJ'"
         },
         "notes": {
           "name": "notes",

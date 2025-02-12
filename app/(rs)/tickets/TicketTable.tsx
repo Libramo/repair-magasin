@@ -28,6 +28,8 @@ import {
   ArrowUpDown,
   ArrowDown,
   ArrowUp,
+  ArrowLeft,
+  ArrowRight,
 } from "lucide-react";
 
 import { useRouter, useSearchParams } from "next/navigation";
@@ -36,6 +38,7 @@ import { Button } from "@/components/ui/button";
 import Filter from "@/components/react-table/Filter";
 import { usePolling } from "@/hooks/usePooling";
 import { TicketSearchResultsType } from "@/lib/queries";
+// import { formatString } from "@/lib/utils";
 
 type Props = {
   data: TicketSearchResultsType;
@@ -74,12 +77,27 @@ export default function TicketTable({ data }: Props) {
     "completed",
   ];
 
+  const headerDisplayNames: Record<keyof RowType, string> = {
+    id: "Identifiant",
+    ticketDate: "Date du ticket",
+    title: "Titre",
+    tech: "Technicien",
+    firstName: "Prénom",
+    lastName: "Nom",
+    email: "Email",
+    completed: "Réparé",
+  };
+
+  function formatString(columnName: keyof RowType): string {
+    return headerDisplayNames[columnName] || columnName;
+  }
+
   const columnWidths = {
-    completed: 150,
+    completed: 50,
     ticketDate: 150,
-    title: 250,
+    title: 300,
     tech: 225,
-    email: 225,
+    email: 100,
   };
 
   const columnHelper = createColumnHelper<RowType>();
@@ -89,16 +107,19 @@ export default function TicketTable({ data }: Props) {
       (row) => {
         // transformational
         const value = row[columnName];
+
         if (columnName === "ticketDate" && value instanceof Date) {
-          return value.toLocaleDateString("en-US", {
+          return value.toLocaleDateString("fr-FR", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",
           });
         }
+
         if (columnName === "completed") {
           return value ? "COMPLETED" : "OPEN";
         }
+
         return value;
       },
       {
@@ -114,7 +135,7 @@ export default function TicketTable({ data }: Props) {
                 column.toggleSorting(column.getIsSorted() === "asc")
               }
             >
-              {columnName[0].toUpperCase() + columnName.slice(1)}
+              {formatString(columnName)}
 
               {column.getIsSorted() === "asc" && (
                 <ArrowUp className="ml-2 h-4 w-4" />
@@ -237,6 +258,7 @@ export default function TicketTable({ data }: Props) {
           </TableBody>
         </Table>
       </div>
+
       <div className="flex justify-between items-center gap-1 flex-wrap">
         <div>
           <p className="whitespace-nowrap font-bold">
@@ -252,49 +274,45 @@ export default function TicketTable({ data }: Props) {
             }]`}
           </p>
         </div>
-        <div className="flex flex-row gap-1">
-          <div className="flex flex-row gap-1">
-            <Button variant="outline" onClick={() => router.refresh()}>
-              Refresh Data
-            </Button>
-            <Button variant="outline" onClick={() => table.resetSorting()}>
-              Reset Sorting
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => table.resetColumnFilters()}
-            >
-              Reset Filters
-            </Button>
-          </div>
-          <div className="flex flex-row gap-1">
-            <Button
-              variant="outline"
-              onClick={() => {
-                const newIndex = table.getState().pagination.pageIndex - 1;
-                table.setPageIndex(newIndex);
-                const params = new URLSearchParams(searchParams.toString());
-                params.set("page", (newIndex + 1).toString());
-                router.replace(`?${params.toString()}`, { scroll: false });
-              }}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                const newIndex = table.getState().pagination.pageIndex + 1;
-                table.setPageIndex(newIndex);
-                const params = new URLSearchParams(searchParams.toString());
-                params.set("page", (newIndex + 1).toString());
-                router.replace(`?${params.toString()}`, { scroll: false });
-              }}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-            </Button>
-          </div>
+
+        <div className="flex flex-row gap-5">
+          <Button variant="outline" onClick={() => router.refresh()}>
+            Actualiser
+          </Button>
+          <Button variant="outline" onClick={() => table.resetSorting()}>
+            Réinitialiser tri
+          </Button>
+          <Button variant="outline" onClick={() => table.resetColumnFilters()}>
+            Réinitialiser filtre
+          </Button>
+        </div>
+        <div className="flex flex-row gap-4">
+          <Button
+            variant="outline"
+            onClick={() => {
+              const newIndex = table.getState().pagination.pageIndex - 1;
+              table.setPageIndex(newIndex);
+              const params = new URLSearchParams(searchParams.toString());
+              params.set("page", (newIndex + 1).toString());
+              router.replace(`?${params.toString()}`, { scroll: false });
+            }}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <ArrowLeft />
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              const newIndex = table.getState().pagination.pageIndex + 1;
+              table.setPageIndex(newIndex);
+              const params = new URLSearchParams(searchParams.toString());
+              params.set("page", (newIndex + 1).toString());
+              router.replace(`?${params.toString()}`, { scroll: false });
+            }}
+            disabled={!table.getCanNextPage()}
+          >
+            <ArrowRight />
+          </Button>
         </div>
       </div>
     </div>

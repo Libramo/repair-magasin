@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx ./db/migrate.ts"
+    "db:migrate": "tsx db/migrate.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

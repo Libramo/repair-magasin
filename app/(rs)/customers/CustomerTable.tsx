@@ -34,22 +34,35 @@ import { MoreHorizontal, TableOfContents } from "lucide-react";
 
 // import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Props = {
   data: selectCustomerSchemaType[];
 };
 
 export default function CustomerTable({ data }: Props) {
-  // const router = useRouter();
-
+  const router = useRouter();
   const columnHeadersArray: Array<keyof selectCustomerSchemaType> = [
     "firstName",
     "lastName",
     "email",
     "phone",
-    "city",
-    "zip",
+    "region",
   ];
+
+  const headerDisplayNames: Partial<
+    Record<keyof selectCustomerSchemaType, string>
+  > = {
+    firstName: "Prénom",
+    lastName: "Nom",
+    email: "Email",
+    phone: "Téléphone",
+    region: "Région",
+  };
+
+  function formatString(columnName: keyof selectCustomerSchemaType): string {
+    return headerDisplayNames[columnName] || columnName;
+  }
 
   const columnHelper = createColumnHelper<selectCustomerSchemaType>();
 
@@ -59,7 +72,7 @@ export default function CustomerTable({ data }: Props) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
+          <Button variant="ghost" className="h-8 w-full p-0">
             <span className="sr-only">Open menu</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
@@ -75,7 +88,7 @@ export default function CustomerTable({ data }: Props) {
               className="w-full"
               prefetch={false}
             >
-              New Ticket
+              Nouveau ticket
             </Link>
           </DropdownMenuItem>
 
@@ -85,7 +98,7 @@ export default function CustomerTable({ data }: Props) {
               className="w-full"
               prefetch={false}
             >
-              Edit Customer
+              Editer les données du client
             </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -95,17 +108,27 @@ export default function CustomerTable({ data }: Props) {
 
   ActionsCell.displayName = "ActionsCell";
 
+  const columnWidths = {
+    firstName: 100,
+    lastName: 100,
+    email: 200,
+    phone: 100,
+    region: 50,
+  };
+
   const columns = [
     ...columnHeadersArray.map((columnName) => {
       return columnHelper.accessor(columnName, {
         id: columnName,
-        header:
-          columnName[0].toUpperCase() +
-          columnName.slice(1).replace(/([A-Z])/g, " $1".toLowerCase()),
+        size:
+          columnWidths[columnName as keyof typeof columnWidths] ?? undefined,
+        header: formatString(columnName),
       });
     }),
+
     columnHelper.display({
       id: "actions",
+      size: 50,
       header: () => <TableOfContents />,
       cell: ActionsCell,
     }),
@@ -127,8 +150,9 @@ export default function CustomerTable({ data }: Props) {
                 <TableHead
                   key={header.id}
                   className={`bg-secondary ${
-                    header.id === "actions" ? "w-12" : ""
+                    header.id === "actions" ? "w-full" : ""
                   }`}
+                  style={{ width: header.getSize() }}
                 >
                   <div
                     className={`${
@@ -154,6 +178,9 @@ export default function CustomerTable({ data }: Props) {
             <TableRow
               key={row.id}
               className="cursor-pointer hover:bg-border/25 dark:hover:bg-ring/40"
+              onClick={() =>
+                router.push(`/customers/form?customerId=${row.original.id}`)
+              }
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id} className="border">

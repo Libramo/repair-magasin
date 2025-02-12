@@ -8,7 +8,7 @@ export default function TicketSearch() {
       <Input
         name="searchText"
         type="text"
-        placeholder="Search Tickets"
+        placeholder="Rechercher tickets..."
         className="w-full"
       />
       <SearchButton />

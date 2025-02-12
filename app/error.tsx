@@ -17,15 +17,15 @@ export default function Error({
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
+    <div className="mx-auto my-auto">
+      <h2>Quelque chose n&apos;a pas fonctionné !</h2>
       <button
         onClick={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
       >
-        Try again
+        Réessayer 😉
       </button>
     </div>
   );

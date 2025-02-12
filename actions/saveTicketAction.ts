@@ -47,7 +47,7 @@ export const saveTicketAction = actionClient
           .returning({ insertedId: tickets.id });
 
         return {
-          message: `Ticket ID #${result[0].insertedId} created successfully`,
+          message: `Le ticket #${result[0].insertedId} a été crée avec succès`,
         };
       }
 
@@ -66,7 +66,7 @@ export const saveTicketAction = actionClient
         .returning({ updatedId: tickets.id });
 
       return {
-        message: `Ticket ID #${result[0].updatedId} updated successfully`,
+        message: `Le ticket #${result[0].updatedId} a été mis à jour avec succès.`,
       };
     }
   );

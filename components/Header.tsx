@@ -9,7 +9,7 @@ import { NavButtonMenu } from "./NavButtonMenu";
 
 export function Header() {
   return (
-    <header className="animate-slide bg-background h-12 p-2 border-b sticky top-0 z-20">
+    <header className="animate-slide bg-background h-12 p-2 border sticky top-0 z-20">
       <div className="flex h-8 items-center justify-between w-full">
         <div className="flex items-center gap-2">
           <NavButton href="/tickets" label="Home" icon={HomeIcon} />
@@ -20,12 +20,12 @@ export function Header() {
             title="Home"
           >
             <h1 className="hidden sm:block text-xl font-bold m-0 mt-1">
-              Computer Repair Shop
+              BLY Reparation électronique
             </h1>
           </Link>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <NavButton href="/tickets" label="Tickets" icon={File} />
 
           <NavButtonMenu
@@ -42,8 +42,8 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            aria-label="LogOut"
-            title="LogOut"
+            aria-label="Deconnexion"
+            title="Déconnexion"
             className="rounded-full"
             asChild
           >

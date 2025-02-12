@@ -44,12 +44,7 @@ export const saveCustomerAction = actionClient
             email: customer.email,
             phone: customer.phone,
             address1: customer.address1,
-            ...(customer.address2?.trim()
-              ? { address2: customer.address2 }
-              : {}),
-            city: customer.city,
-            state: customer.state,
-            zip: customer.zip,
+            region: customer.region,
             ...(customer.notes?.trim() ? { notes: customer.notes } : {}),
           })
           .returning({ insertedId: customers.id });
@@ -69,10 +64,7 @@ export const saveCustomerAction = actionClient
           email: customer.email,
           phone: customer.phone,
           address1: customer.address1,
-          address2: customer.address2?.trim() ?? null,
-          city: customer.city,
-          state: customer.state,
-          zip: customer.zip,
+          region: customer.region,
           notes: customer.notes?.trim() ?? null,
           active: customer.active,
         })

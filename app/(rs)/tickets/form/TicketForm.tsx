@@ -73,11 +73,12 @@ export default function TicketForm({
         });
       }
     },
+
     onError() {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Save Failed",
+        description: "L'enregistrement a échoué",
       });
     },
   });
@@ -89,15 +90,17 @@ export default function TicketForm({
   return (
     <div className="flex flex-col gap-1 sm:px-8">
       <DisplayServerActionResponse result={saveResult} />
+
       <div>
         <h2 className="text-2xl font-bold">
           {ticket?.id && isEditable
-            ? `Edit Ticket # ${ticket.id}`
+            ? `Modifier le ticket # ${ticket.id}`
             : ticket?.id
-            ? `View Ticket # ${ticket.id}`
-            : "New Ticket Form"}
+            ? `Voir ticket # ${ticket.id}`
+            : "Nouveau formulaire de ticket"}
         </h2>
       </div>
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(submitForm)}
@@ -105,7 +108,7 @@ export default function TicketForm({
         >
           <div className="flex flex-col gap-4 w-full max-w-xs">
             <InputWithLabel<insertTicketSchemaType>
-              fieldTitle="Title"
+              fieldTitle="Titre"
               nameInSchema="title"
               disabled={!isEditable}
             />
@@ -134,7 +137,7 @@ export default function TicketForm({
               <CheckboxWithLabel<insertTicketSchemaType>
                 fieldTitle="Completed"
                 nameInSchema="completed"
-                message="Yes"
+                message="Oui"
                 disabled={!isEditable}
               />
             ) : null}
@@ -175,10 +178,11 @@ export default function TicketForm({
                 >
                   {isSaving ? (
                     <>
-                      <LoaderCircle className="animate-spin" /> Saving
+                      <LoaderCircle className="animate-spin" />{" "}
+                      Enregistrement...
                     </>
                   ) : (
-                    "Save"
+                    "Enregistrer"
                   )}
                 </Button>
 

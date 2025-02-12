@@ -16,7 +16,7 @@ export const actionClient = createSafeActionClient({
     if (e.constructor.name === "NeonDbError") {
       const { code, detail } = e as NeonDbError;
       if (code === "25305") {
-        return `Unique entry required. ${detail}`;
+        return `Un element identique existe déja ! ${detail}`;
       }
     }
 
@@ -27,8 +27,9 @@ export const actionClient = createSafeActionClient({
       scope.setContext("clientInput", { clientInput });
       return scope;
     });
+
     if (e.constructor.name === "NeonDbError") {
-      return "Database Error: Your data did not save. Support will be notified.";
+      return "Erreur de base de données : Vos données n'ont pas été enregistrées. L'assistance sera informée.";
     }
     return e.message;
   },

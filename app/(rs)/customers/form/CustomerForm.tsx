@@ -42,10 +42,7 @@ export default function CustomerForm({ customer, isManager = false }: Props) {
     firstName: "",
     lastName: "",
     address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zip: "",
+    region: "",
     phone: "",
     email: "",
     notes: "",
@@ -58,10 +55,7 @@ export default function CustomerForm({ customer, isManager = false }: Props) {
         firstName: customer?.firstName ?? "",
         lastName: customer?.lastName ?? "",
         address1: customer?.address1 ?? "",
-        address2: customer?.address2 ?? "",
-        city: customer?.city ?? "",
-        state: customer?.state ?? "",
-        zip: customer?.zip ?? "",
+        region: customer?.region ?? "",
         phone: customer?.phone ?? "",
         email: customer?.email ?? "",
         notes: customer?.notes ?? "",
@@ -89,7 +83,7 @@ export default function CustomerForm({ customer, isManager = false }: Props) {
       if (data?.message) {
         toast({
           variant: "default",
-          title: "Success! 🎉",
+          title: "Succès! 🎉",
           description: data.message,
         });
       }
@@ -97,7 +91,7 @@ export default function CustomerForm({ customer, isManager = false }: Props) {
     onError() {
       toast({
         variant: "destructive",
-        title: "Error",
+        title: "Erreur",
         description: "Save Failed",
       });
     },
@@ -123,50 +117,35 @@ export default function CustomerForm({ customer, isManager = false }: Props) {
         >
           <div className="flex flex-col gap-4 w-full max-w-xs">
             <InputWithLabel<insertCustomerSchemaType>
-              fieldTitle="First Name"
+              fieldTitle="Prénom"
               nameInSchema="firstName"
             />
 
             <InputWithLabel<insertCustomerSchemaType>
-              fieldTitle="Last Name"
+              fieldTitle="Nom"
               nameInSchema="lastName"
             />
 
             <InputWithLabel<insertCustomerSchemaType>
-              fieldTitle="Address 1"
+              fieldTitle="Adresse"
               nameInSchema="address1"
             />
 
-            <InputWithLabel<insertCustomerSchemaType>
-              fieldTitle="Address 2"
-              nameInSchema="address2"
-            />
-
-            <InputWithLabel<insertCustomerSchemaType>
-              fieldTitle="City"
-              nameInSchema="city"
-            />
-
             <SelectWithLabel<insertCustomerSchemaType>
-              fieldTitle="State"
-              nameInSchema="state"
+              fieldTitle="Région"
+              nameInSchema="region"
               data={StatesArray}
             />
           </div>
 
           <div className="flex flex-col gap-4 w-full max-w-xs">
             <InputWithLabel<insertCustomerSchemaType>
-              fieldTitle="Zip Code"
-              nameInSchema="zip"
-            />
-
-            <InputWithLabel<insertCustomerSchemaType>
               fieldTitle="Email"
               nameInSchema="email"
             />
 
             <InputWithLabel<insertCustomerSchemaType>
-              fieldTitle="Phone"
+              fieldTitle="Téléphone"
               nameInSchema="phone"
             />
 
@@ -210,7 +189,7 @@ export default function CustomerForm({ customer, isManager = false }: Props) {
                   resetSaveAction();
                 }}
               >
-                Reset
+                Réinitialisation
               </Button>
             </div>
           </div>

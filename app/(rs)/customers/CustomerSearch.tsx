@@ -8,7 +8,7 @@ export default function CustomerSearch() {
       <Input
         name="searchText"
         type="text"
-        placeholder="Search Customers"
+        placeholder="Rechercher client par prénom, nom, email, etc..."
         className="w-full"
         autoFocus
       />
