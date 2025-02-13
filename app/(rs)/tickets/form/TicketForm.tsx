@@ -149,10 +149,10 @@ export default function TicketForm({
                 {customer.firstName} {customer.lastName}
               </p>
               <p>{customer.address1}</p>
-              {customer.address2 ? <p>{customer.address2}</p> : null}
+              {/* {customer.address2 ? <p>{customer.address2}</p> : null}
               <p>
                 {customer.city}, {customer.state} {customer.zip}
-              </p>
+              </p> */}
               <hr className="w-4/5" />
               <p>{customer.email}</p>
               <p>Phone: {customer.phone}</p>
